@@ -1,0 +1,11 @@
+*
+!/**/
+!*.*
+!Makefile
+
+.idea
+cmake-build-debug
+*.in
+*.out
+*.exe
+distrib-*/*.h
