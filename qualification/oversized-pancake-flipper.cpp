@@ -1,18 +1,8 @@
-#include <algorithm>
 #include <cstdio>
-#include <cstring>
 #include <iostream>
-#include <map>
-#include <queue>
-#include <set>
 #include <string>
-#include <utility>
-#include <vector>
 
 using namespace std;
-
-typedef long long ll;
-typedef long double ld;
 
 int main() {
   int t; scanf("%d\n", &t);
@@ -29,7 +19,7 @@ int main() {
       cnt++;
     }
 
-    for(int i = str.length() - k + 1; i < str.length(); i++) {
+    for(int i = (int) str.length() - k + 1; i < str.length(); i++) {
       if(str[i] == '-') { cnt = -1; break; }
     }
 
