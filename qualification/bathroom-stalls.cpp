@@ -1,45 +1,32 @@
-#include <algorithm>
 #include <cstdio>
-#include <cstring>
-#include <iostream>
 #include <map>
-#include <queue>
-#include <set>
-#include <string>
-#include <utility>
-#include <vector>
-
-#define MAXN 1000000
 
 using namespace std;
 
 typedef long long ll;
-typedef long double ld;
 
-map<int, int> spaces;
+map<ll, ll> spaces;
 
 int main() {
   int t; scanf("%d\n", &t);
   for(int tc = 1; tc <= t; tc++) {
-    int n, k; scanf("%d %d\n", &n, &k);
+    ll n, k; scanf("%lld %lld\n", &n, &k);
     spaces.clear();
     spaces[n]++;
 
-    int ls = -1, rs = -1;
-    for(int i = 0; i < k; i++) {
+    ll ls = -1, rs = -1;
+    while(k > 0) {
       auto it = prev(spaces.end());
+      ll size = it->first, count = it->second;
+      spaces.erase(it);
 
-      int size = it->first;
       ls = (size - 1) / 2;
       rs = size / 2;
-
-      if(it->second == 1) spaces.erase(it);
-      else it->second--;
-
-      spaces[ls]++;
-      spaces[rs]++;
+      spaces[ls] += count;
+      spaces[rs] += count;
+      k -= count;
     }
-    printf("Case #%d: %d %d\n", tc, max(ls, rs), min(ls, rs));
+    printf("Case #%d: %lld %lld\n", tc, max(ls, rs), min(ls, rs));
   }
   return 0;
 }
