@@ -33,9 +33,11 @@ The following is the list of the problems solved. Each problem identifier is spe
 * ✓ [A. Oversized Pancake Flipper][qual1] (`oversized-pancake-flipper`)
 * ✓ [B. Tidy Numbers][qual2] (`tidy-numbers`)
 * ✓ [C. Bathroom Stalls][qual3] (`bathroom-stalls`)
+* ✗ [D. Fashion Show][qual4] (`fashion-show`)
 
 [1]: https://code.google.com/codejam
 [2]: https://code.google.com/codejam/resources/quickstart-guide#dcj
 [qual1]: https://code.google.com/codejam/contest/3264486/dashboard#s=p0
 [qual2]: https://code.google.com/codejam/contest/3264486/dashboard#s=p1
 [qual3]: https://code.google.com/codejam/contest/3264486/dashboard#s=p2
+[qual4]: https://code.google.com/codejam/contest/3264486/dashboard#s=p3
