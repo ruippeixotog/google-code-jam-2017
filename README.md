@@ -33,7 +33,7 @@ The following is the list of the problems solved. Each problem identifier is spe
 * ✓ [A. Oversized Pancake Flipper][qual1] (`oversized-pancake-flipper`)
 * ✓ [B. Tidy Numbers][qual2] (`tidy-numbers`)
 * ✓ [C. Bathroom Stalls][qual3] (`bathroom-stalls`)
-* ✗ [D. Fashion Show][qual4] (`fashion-show`)
+* ✓ [D. Fashion Show][qual4] (`fashion-show`)
 
 [1]: https://code.google.com/codejam
 [2]: https://code.google.com/codejam/resources/quickstart-guide#dcj
