@@ -1,12 +1,5 @@
-#include <algorithm>
 #include <cstdio>
 #include <cstring>
-#include <iostream>
-#include <map>
-#include <queue>
-#include <set>
-#include <string>
-#include <utility>
 #include <vector>
 
 #define MAXN 100
@@ -95,10 +88,9 @@ int main() {
     printf("Case #%d: %d %d\n", tc, n + plusPoints, pieces);
     for(int i = 0; i < n; i++) {
       for(int j = 0; j < n; j++) {
-        if(crossSol[i][j] > 0) {
-          printf("%c %d %d\n", plusSol[i][j] ? 'o' : 'x', i + 1, j + 1);
-        } else if(plusSol[i][j] > 0) {
-          printf("%c %d %d\n", crossSol[i][j] ? 'o' : '+', i + 1, j + 1);
+        if(crossSol[i][j] > 0 || plusSol[i][j] > 0) {
+          char ch = crossSol[i][j] ? (plusSol[i][j] ? 'o' : 'x') : '+';
+          printf("%c %d %d\n", ch, i + 1, j + 1);
         }
       }
     }
