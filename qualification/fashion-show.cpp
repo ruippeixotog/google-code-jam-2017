@@ -16,25 +16,25 @@ using namespace std;
 int n;
 bool row[MAXN], col[MAXN], diag1[MAXN * 2 - 1], diag2[MAXN * 2 - 1];
 
-vector<pair<pair<int, int>, char>> crossSol, plusSol;
+bool crossSol[MAXN][MAXN], plusSol[MAXN][MAXN];
 
 void placeCrosses() {
-  crossSol.clear();
+  memset(crossSol, false, sizeof(crossSol));
 
   for(int i = 0; i < n; i++) {
     if(row[i]) continue;
     for(int j = 0; j < n; j++) {
       if(col[j]) continue;
 
-      crossSol.push_back({{i, j}, 'x'});
+      crossSol[i][j] = true;
       col[j] = true;
       break;
     }
   }
 }
 
-void placePluses() {
-  plusSol.clear();
+int placePluses() {
+  memset(plusSol, false, sizeof(plusSol));
 
   vector<int> ds;
   for(int i = 0; i < n - 1; i++) {
@@ -43,49 +43,22 @@ void placePluses() {
   }
   ds.push_back(n - 1);
 
+  int points = 0;
   for(int d: ds) {
-    if(diag1[d]) continue;
+    if(diag1[d]) { points++; continue; }
     int i = d < n ? d : n - 1;
     int j = d < n ? 0 : d - n + 1;
 
     for(; i >= 0 && j < n; i--, j++) {
       if(diag2[i - j + n - 1]) continue;
 
-      plusSol.push_back({{i, j}, '+'});
+      plusSol[i][j] = true;
       diag2[i - j + n - 1] = true;
+      points++;
       break;
     }
   }
-
-//  vector<pair<int, int>> ds;
-//  for(int d = 0; d < n * 2 - 1; d++) {
-//    int i = d < n ? d : n - 1;
-//    int j = d < n ? 0 : d - n + 1;
-//
-//    int count = 0, all = 0;
-//    for(; i >= 0 && j < n; i--, j++) {
-//      all++;
-//      count += !diag2[i - j + n - 1];
-//    }
-//    cerr << "d = " << d << "; size = " << all << "; av = " << count << endl;
-//    ds.push_back({count, d});
-//  }
-//  sort(ds.begin(), ds.end());
-//
-//  for(auto d: ds) {
-//    cerr << "running " << d.second << endl;
-//    if(diag1[d.second]) continue;
-//    int i = d.second < n ? d.second : n - 1;
-//    int j = d.second < n ? 0 : d.second - n + 1;
-//
-//    for(; i >= 0 && j < n; i--, j++) {
-//      if(diag2[i - j + n - 1]) continue;
-//
-//      plusSol.push_back({{i, j}, '+'});
-//      diag2[i - j + n - 1] = true;
-//      break;
-//    }
-//  }
+  return points;
 }
 
 int main() {
@@ -93,63 +66,37 @@ int main() {
   for(int tc = 1; tc <= t; tc++) {
     int m; scanf("%d %d\n", &n, &m);
 
-    cerr << "case " << tc << endl;
-    cerr << "case " << n << " " << m << endl;
-
 //    memset(row, 0, sizeof(row) + sizeof(col) + sizeof(diag1) + sizeof(diag2));
     memset(row, 0, sizeof(row));
     memset(col, 0, sizeof(col));
     memset(diag1, 0, sizeof(diag1));
     memset(diag2, 0, sizeof(diag2));
 
-    int initPoints = 0;
     for(int i = 0; i < m; i++) {
       char ch; int r, c; scanf("%c %d %d\n", &ch, &r, &c);
       r--; c--;
-      if(ch == 'x' || ch == 'o') row[r] = col[c] = true;
-      if(ch == '+' || ch == 'o') diag1[r + c] = diag2[r - c + n - 1] = true;
-      initPoints += ch == '.' ? 0 : ch == 'o' ? 2 : 1;
+      if(ch != '+') row[r] = col[c] = true;
+      if(ch != 'x') diag1[r + c] = diag2[r - c + n - 1] = true;
     }
 
     placeCrosses();
-    placePluses();
+    int plusPoints = placePluses();
 
-//    cerr << "SOL(x)" << endl;
-//    for(int i = 0; i < crossSol.size(); i++) {
-//      cerr << crossSol[i].first.first << "," << crossSol[i].first.second << endl;
-//    }
-
-    vector<pair<pair<int, int>, char>> sol;
-    sort(plusSol.begin(), plusSol.end());
-
-//    cerr << "SOL(+)" << endl;
-//    for(int i = 0; i < plusSol.size(); i++) {
-//      cerr << plusSol[i].first.first << "," << plusSol[i].first.second << endl;
-//    }
-
-    merge(crossSol.begin(), crossSol.end(), plusSol.begin(), plusSol.end(), back_inserter(sol));
-
-//    cerr << "SOL" << endl;
-//    for(int i = 0; i < sol.size(); i++) {
-//      cerr << get<0>(sol[i]) << "," << get<1>(sol[i]) << endl;
-//    }
-
-    int oCount = 0;
-    for(int i = 1; i < sol.size(); i++) {
-      if(sol[i].first == sol[i - 1].first) oCount++;
+    int pieces = 0;
+    for(int i = 0; i < n; i++) {
+      for(int j = 0; j < n; j++) {
+        if(crossSol[i][j] || plusSol[i][j]) pieces++;
+      }
     }
 
-    printf("Case #%d: %d %d\n", tc,
-           initPoints + (int) crossSol.size() + (int) plusSol.size(),
-           (int) sol.size() - oCount);
-
-    for(int i = 0; i < sol.size(); i++) {
-      if(i < sol.size() - 1 && sol[i].first == sol[i + 1].first) {
-        printf("o %d %d\n", sol[i].first.first + 1, sol[i].first.second + 1);
-        i++;
-      } else {
-        printf("%c %d %d\n", sol[i].second,
-               sol[i].first.first + 1, sol[i].first.second + 1);
+    printf("Case #%d: %d %d\n", tc, n + plusPoints, pieces);
+    for(int i = 0; i < n; i++) {
+      for(int j = 0; j < n; j++) {
+        if(crossSol[i][j]) {
+          printf("%c %d %d\n", plusSol[i][j] ? 'o' : 'x', i + 1, j + 1);
+        } else if(plusSol[i][j]) {
+          printf("%c %d %d\n", '+', i + 1, j + 1);
+        }
       }
     }
   }
