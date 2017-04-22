@@ -40,6 +40,12 @@ The following is the list of the problems solved. Each problem identifier is spe
 * ✓ [A. Alphabet Cake][round1a1] (`alphabet-cake`)
 * ✓ [B. Ratatouille][round1a2] (`ratatouille`)
 
+### Round 1B
+
+* ✓ [A. Steed 2: Cruise Control][round1b1] (`speed-2-cruise-control`)
+* ✓ [B. Stable Neigh-bors][round1b2] (`stable-neigh-bors`)
+* ✓ [C. Pony Express][round1b3] (`pony-express`)
+
 [1]: https://code.google.com/codejam
 [2]: https://code.google.com/codejam/resources/quickstart-guide#dcj
 [qual1]: https://code.google.com/codejam/contest/3264486/dashboard#s=p0
@@ -48,3 +54,6 @@ The following is the list of the problems solved. Each problem identifier is spe
 [qual4]: https://code.google.com/codejam/contest/3264486/dashboard#s=p3
 [round1a1]: https://code.google.com/codejam/contest/5304486/dashboard#s=p0
 [round1a2]: https://code.google.com/codejam/contest/5304486/dashboard#s=p1
+[round1b1]: https://code.google.com/codejam/contest/8294486/dashboard#s=p0
+[round1b2]: https://code.google.com/codejam/contest/8294486/dashboard#s=p1
+[round1b3]: https://code.google.com/codejam/contest/8294486/dashboard#s=p2
