@@ -1,23 +1,14 @@
 #include <algorithm>
 #include <cstdio>
-#include <cstring>
-#include <iostream>
-#include <map>
-#include <queue>
-#include <set>
-#include <string>
-#include <utility>
-#include <vector>
 
-#define MAXN 2000
-#define INF 1000000000
+#define MAXN 1000
 
 using namespace std;
 
-typedef long long ll;
 typedef long double ld;
 
 pair<int, int> ks[MAXN];
+
 ld ts[MAXN + 1];
 
 int main() {
