@@ -46,6 +46,11 @@ The following is the list of the problems solved. Each problem identifier is spe
 * ✓ [B. Stable Neigh-bors][round1b2] (`stable-neigh-bors`)
 * ✓ [C. Pony Express][round1b3] (`pony-express`)
 
+### Round 1C
+
+* ✓ [A. Ample Syrup][round1c1] (`ample-syrup`)
+* ✓ [B. Parenting Partnering][round1c2] (`parenting-partnering`)
+
 [1]: https://code.google.com/codejam
 [2]: https://code.google.com/codejam/resources/quickstart-guide#dcj
 [qual1]: https://code.google.com/codejam/contest/3264486/dashboard#s=p0
@@ -57,3 +62,5 @@ The following is the list of the problems solved. Each problem identifier is spe
 [round1b1]: https://code.google.com/codejam/contest/8294486/dashboard#s=p0
 [round1b2]: https://code.google.com/codejam/contest/8294486/dashboard#s=p1
 [round1b3]: https://code.google.com/codejam/contest/8294486/dashboard#s=p2
+[round1c1]: https://code.google.com/codejam/contest/3274486/dashboard#s=p0
+[round1c2]: https://code.google.com/codejam/contest/3274486/dashboard#s=p1
