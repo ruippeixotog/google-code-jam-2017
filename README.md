@@ -50,6 +50,7 @@ The following is the list of the problems solved. Each problem identifier is spe
 
 * ✓ [A. Ample Syrup][round1c1] (`ample-syrup`)
 * ✓ [B. Parenting Partnering][round1c2] (`parenting-partnering`)
+* ✓ [C. Core Training][round1c3] (`core-training`)
 
 [1]: https://code.google.com/codejam
 [2]: https://code.google.com/codejam/resources/quickstart-guide#dcj
@@ -64,3 +65,4 @@ The following is the list of the problems solved. Each problem identifier is spe
 [round1b3]: https://code.google.com/codejam/contest/8294486/dashboard#s=p2
 [round1c1]: https://code.google.com/codejam/contest/3274486/dashboard#s=p0
 [round1c2]: https://code.google.com/codejam/contest/3274486/dashboard#s=p1
+[round1c3]: https://code.google.com/codejam/contest/3274486/dashboard#s=p2
