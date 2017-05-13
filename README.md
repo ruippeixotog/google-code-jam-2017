@@ -52,6 +52,11 @@ The following is the list of the problems solved. Each problem identifier is spe
 * ✓ [B. Parenting Partnering][round1c2] (`parenting-partnering`)
 * ✓ [C. Core Training][round1c3] (`core-training`)
 
+### Round 2
+
+* ✓ [A. Fresh Chocolate][round21] (`fresh-chocolate`)
+* ✗ [B. Roller Coaster Scheduling][round22] (`roller-coaster-scheduling`)
+
 [1]: https://code.google.com/codejam
 [2]: https://code.google.com/codejam/resources/quickstart-guide#dcj
 [qual1]: https://code.google.com/codejam/contest/3264486/dashboard#s=p0
@@ -66,3 +71,5 @@ The following is the list of the problems solved. Each problem identifier is spe
 [round1c1]: https://code.google.com/codejam/contest/3274486/dashboard#s=p0
 [round1c2]: https://code.google.com/codejam/contest/3274486/dashboard#s=p1
 [round1c3]: https://code.google.com/codejam/contest/3274486/dashboard#s=p2
+[round21]: https://code.google.com/codejam/contest/5314486/dashboard#s=p0
+[round22]: https://code.google.com/codejam/contest/5314486/dashboard#s=p1
