@@ -57,6 +57,13 @@ The following is the list of the problems solved. Each problem identifier is spe
 * ✓ [A. Fresh Chocolate][round21] (`fresh-chocolate`)
 * ✗ [B. Roller Coaster Scheduling][round22] (`roller-coaster-scheduling`)
 
+### Distributed Round 1
+
+* ✓ [B. Pancakes][distribround12] (`pancakes`)
+* ✗ [C. Weird Editor][distribround13] (`weird_editor`)
+* ✗ [D. Todd and Steven][distribround14] (`todd_and_steven`)
+* ✗ [E. Query of Death][distribround15] (`query_of_death`)
+
 [1]: https://code.google.com/codejam
 [2]: https://code.google.com/codejam/resources/quickstart-guide#dcj
 [qual1]: https://code.google.com/codejam/contest/3264486/dashboard#s=p0
@@ -73,3 +80,7 @@ The following is the list of the problems solved. Each problem identifier is spe
 [round1c3]: https://code.google.com/codejam/contest/3274486/dashboard#s=p2
 [round21]: https://code.google.com/codejam/contest/5314486/dashboard#s=p0
 [round22]: https://code.google.com/codejam/contest/5314486/dashboard#s=p1
+[distribround12]: https://code.google.com/codejam/contest/8314486/dashboard#s=p1
+[distribround13]: https://code.google.com/codejam/contest/8314486/dashboard#s=p2
+[distribround14]: https://code.google.com/codejam/contest/8314486/dashboard#s=p3
+[distribround15]: https://code.google.com/codejam/contest/8314486/dashboard#s=p4
