@@ -1,24 +1,9 @@
-#include <algorithm>
 #include <cstdio>
-#include <cstring>
-#include <iostream>
-#include <map>
-#include <queue>
-#include <set>
-#include <string>
-#include <utility>
-#include <vector>
 
 #include "pancakes.h"
 #include "message.h"
 
-#define MAXN 2000
-#define INF 0x3f3f3f3f
-
-using namespace std;
-
 typedef long long ll;
-typedef long double ld;
 
 int main() {
   int nodeBegin = (int) (MyNodeId() * GetStackSize() / NumberOfNodes());
