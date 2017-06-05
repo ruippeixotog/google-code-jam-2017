@@ -1,26 +1,15 @@
 #include <algorithm>
 #include <cstdio>
 #include <cstring>
-#include <iostream>
-#include <map>
-#include <queue>
-#include <set>
-#include <string>
-#include <utility>
-#include <vector>
 
 #include "weird_editor.h"
 #include "message.h"
 
-#define MAXN 2000
 #define MOD 1000000007
 
 using namespace std;
 
 typedef long long ll;
-typedef long double ld;
-
-//int hist[10];
 
 inline ll madd(ll a, ll b) { return (a + b) % MOD; }
 inline ll mmul(ll a, ll b) { return (a * b) % MOD; }
@@ -31,78 +20,83 @@ ll mpow(ll a, ll p) {
   return mmul(halfPow, p % 2 ? mmul(a, halfPow) : halfPow);
 }
 
-void search(int digit) {
-  Receive(0);
-  ll from = GetLL(0);
-//  cerr << "search " << digit << " from " << from << endl;
+int digitCnt[10];
 
-  int nodeBegin = (int) (from + MyNodeId() * (GetNumberLength() - from) / NumberOfNodes());
-  int nodeEnd = (int) (from + (MyNodeId() + 1) * (GetNumberLength() - from) / NumberOfNodes());
+void search() {
+  int nodeBegin = (int) (MyNodeId() * GetNumberLength() / NumberOfNodes());
+  int nodeEnd = (int) ((MyNodeId() + 1) * GetNumberLength() / NumberOfNodes());
 
-  int cnt = 0; ll last = -1;
   for(int i = nodeBegin; i < nodeEnd; i++) {
-    if(GetDigit(i) == digit) {
-//      cerr << "found " << digit << " at " << i << endl;
-      cnt++; last = i;
-    }
+    int digit = (int) GetDigit(i);
+    for(int d = 1; d < digit; d++) digitCnt[d] = 0;
+    digitCnt[digit]++;
   }
-  PutInt(0, cnt); PutLL(0, last); Send(0);
+  for(int d = 9; d > 0; d--) {
+    PutInt(0, digitCnt[d]);
+  }
+  Send(0);
 }
 
 void calcMod() {
   Receive(0);
-  ll from = GetLL(0), to = GetLL(0);
-
-  int nodeBegin = (int) (from + MyNodeId() * (to - from) / NumberOfNodes());
-  int nodeEnd = (int) (from + (MyNodeId() + 1) * (to - from) / NumberOfNodes());
-
-//  if(nodeBegin != nodeEnd) cerr << "calc " << nodeBegin << " to " << nodeEnd << endl;
-
-  ll currMult = mpow(10, nodeBegin), sum = 0;
-  for(int i = nodeBegin; i < nodeEnd; i++) {
-    sum = madd(sum, currMult);
-    currMult = mmul(currMult, 10);
+  ll digitCntAll = 0;
+  for(int i = 9; i > 0; i--) {
+    digitCnt[i] = GetInt(0);
+    digitCntAll += digitCnt[i];
   }
-//  if(nodeBegin != nodeEnd) cerr << "calc res " << sum << endl;
+  int zerosCnt = (int) (GetNumberLength() - digitCntAll);
+
+  int nodeBegin = (int) (MyNodeId() * digitCntAll / NumberOfNodes());
+  int nodeEnd = (int) ((MyNodeId() + 1) * digitCntAll / NumberOfNodes());
+
+  ll currMult = mpow(10, zerosCnt + nodeBegin), sum = 0;
+  int curr = 0;
+  for(int d = 1; d < 10; d++) {
+    if(curr < nodeBegin) {
+      int toPass = min(digitCnt[d], nodeBegin - curr);
+      digitCnt[d] -= toPass;
+      curr += toPass;
+    }
+    while(curr < nodeEnd && digitCnt[d]) {
+      sum = madd(sum, mmul(d, currMult));
+      currMult = mmul(currMult, 10);
+      digitCnt[d]--; curr++;
+    }
+  }
   PutLL(0, sum); Send(0);
 }
 
 int main() {
-  if(MyNodeId() != 0) {
-    for(int d = 9; d > 0; d--) {
-      search(d);
-      calcMod();
+  search();
+
+  if(MyNodeId() == 0) {
+    memset(digitCnt, 0, sizeof(digitCnt));
+    for(int k = 0; k < NumberOfNodes(); k++) {
+      Receive(k);
+      for(int d = 9; d > 0; d--) {
+        int cnt = GetInt(k);
+        if(cnt > 0) {
+          for(int d2 = 1; d2 < d; d2++) digitCnt[d2] = 0;
+          digitCnt[d] += cnt;
+        }
+      }
     }
-  } else {
-    ll res = 0, cnt = 0, from = 0;
 
-    for(int d = 9; d > 0; d--) {
-      for(int k = 0; k < NumberOfNodes(); k++) {
-        PutLL(k, from); Send(k);
+    for(int k = 0; k < NumberOfNodes(); k++) {
+      for(int d = 9; d > 0; d--) {
+        PutInt(k, digitCnt[d]);
       }
-      search(d);
+      Send(k);
+    }
+  }
 
-      ll multTo = GetNumberLength() - cnt;
-      for(int k = 0; k < NumberOfNodes(); k++) {
-        Receive(k);
-        cnt += GetInt(k);
-        ll lastK = GetLL(k);
-        if(lastK != -1) from = lastK + 1;
-      }
+  calcMod();
 
-      ll multFrom = GetNumberLength() - cnt;
-
-//      cerr << " digit " << d << ": " << multFrom << " - " << multTo << endl;
-      for(int k = 0; k < NumberOfNodes(); k++) {
-        PutLL(k, multFrom); PutLL(k, multTo); Send(k);
-      }
-      calcMod();
-
-      for(int k = 0; k < NumberOfNodes(); k++) {
-        Receive(k);
-        res = madd(res, mmul(d, GetLL(k)));
-      }
-//      cerr << "curr " << res << endl;
+  if(MyNodeId() == 0) {
+    ll res = 0;
+    for(int k = 0; k < NumberOfNodes(); k++) {
+      Receive(k);
+      res = madd(res, GetLL(k));
     }
     printf("%lld\n", res);
   }
