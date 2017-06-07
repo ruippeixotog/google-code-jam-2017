@@ -62,7 +62,7 @@ The following is the list of the problems solved. Each problem identifier is spe
 * ✓ [B. Pancakes][distribround12] (`pancakes`)
 * ✓ [C. Weird Editor][distribround13] (`weird_editor`)
 * ✓ [D. Todd and Steven][distribround14] (`todd_and_steven`)
-* ✗ [E. Query of Death][distribround15] (`query_of_death`)
+* ✓ [E. Query of Death][distribround15] (`query_of_death`)
 
 [1]: https://code.google.com/codejam
 [2]: https://code.google.com/codejam/resources/quickstart-guide#dcj
