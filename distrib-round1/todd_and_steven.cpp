@@ -1,13 +1,6 @@
-#include <algorithm>
 #include <cstdio>
-#include <cstring>
-#include <iostream>
-#include <map>
-#include <queue>
-#include <set>
-#include <string>
 #include <utility>
-#include <vector>
+#include <tuple>
 
 #include "todd_and_steven.h"
 #include "message.h"
@@ -17,62 +10,56 @@
 using namespace std;
 
 typedef long long ll;
-typedef long double ld;
 
 inline ll madd(ll a, ll b) { return (a + b) % MOD; }
 inline ll mmul(ll a, ll b) { return (a * b) % MOD; }
 
-int search(int begin, int end, ll (*getValue)(ll), ll toFind) {
+int tv, tvEnd, sv, svEnd;
+
+int svSearch(ll tvIdx) {
+  if(tvIdx == GetToddLength()) return (int) GetStevenLength();
+  ll tvVal = GetToddValue(tvIdx);
+
+  int begin = 0, end = (int) GetStevenLength();
   while(begin < end) {
     int mid = (begin + end) / 2;
-    if(getValue(mid) < toFind) begin = mid + 1;
+    if(GetStevenValue(mid) < tvVal) begin = mid + 1;
     else end = mid;
   }
   return begin;
 }
 
-void splitWork(int beginNode, int endNode, int tv0, int tv1, int sv0, int sv1) {
-  if(beginNode == endNode - 1) {
-//    cerr << "node " << beginNode << ": " << tv0 << "-" << tv1 << ", " << sv0 << "-" << sv1 << endl;
-    PutInt(beginNode, tv0); PutInt(beginNode, tv1);
-    PutInt(beginNode, sv0); PutInt(beginNode, sv1);
-    Send(beginNode);
-    return;
-  }
-  int tvMid, svMid;
-  if((tv1 - tv0) > (sv1 - sv0)) {
-    tvMid = (tv0 + tv1) / 2;
-    svMid = search(sv0, sv1, GetStevenValue, GetToddValue(tvMid));
-  } else {
-    svMid = (sv0 + sv1) / 2;
-    tvMid = search(tv0, tv1, GetToddValue, GetStevenValue(svMid));
-  }
+pair<int, int> search(ll k) {
+  int tvBegin = 0, tvEnd = (int) GetToddLength();
+  while(tvBegin < tvEnd) {
+    int tvMid = (tvBegin + tvEnd) / 2;
+    int svIdx = svSearch(tvMid);
 
-  int weight = (int) ((endNode - beginNode) *
-    (ll) ((tvMid - tv0) + (svMid - sv0)) / ((tv1 - tv0) + (sv1 - sv0)));
+    if(tvMid + svIdx == k) return {tvMid, svIdx};
+    if(tvMid + svIdx < k) tvBegin = tvMid + 1;
+    else tvEnd = tvMid;
+  }
+  return {tvBegin, k - tvBegin};
+}
 
-  int midNode = min(beginNode + 1, max(endNode - 1, beginNode + weight));
-  splitWork(beginNode, midNode, tv0, tvMid, sv0, svMid);
-  splitWork(midNode, endNode, tvMid, tv1, svMid, sv1);
+void setWork() {
+  ll arrLength = GetStevenLength() + GetToddLength();
+  ll nodeBegin = MyNodeId() * arrLength / NumberOfNodes();
+  ll nodeEnd = (MyNodeId() + 1) * arrLength / NumberOfNodes();
+
+  tie(tv, sv) = search(nodeBegin);
+  tie(tvEnd, svEnd) = search(nodeEnd);
 }
 
 int main() {
-  if(MyNodeId() == 0) {
-    splitWork(0, NumberOfNodes(),
-              0, (int) GetToddLength(), 0, (int) GetStevenLength());
-  }
-
-  Receive(0);
-  int tv = GetInt(0), tvEnd = GetInt(0), sv = GetInt(0), svEnd = GetInt(0);
+  setWork();
 
   ll sum = 0;
   while(tv < tvEnd || sv < svEnd) {
     if(tv < tvEnd && (sv == svEnd || GetToddValue(tv) < GetStevenValue(sv))) {
-//      cerr << "at position " << (tv + sv) << ": " << GetToddValue(tv) << endl;
       sum = madd(sum, GetToddValue(tv) ^ (tv + sv));
       tv++;
     } else {
-//      cerr << "at position " << (tv + sv) << ": " << GetStevenValue(sv) << endl;
       sum = madd(sum, GetStevenValue(sv) ^ (tv + sv));
       sv++;
     }
